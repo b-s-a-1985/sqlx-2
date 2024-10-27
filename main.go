@@ -25,12 +25,13 @@ func main() {
 	// load connection string
 	err := godotenv.Load()
 	if err != nil {
-		log.Fatal("Error loading .env file")
-		panic("Error loading .env file" + err.Error())
+		msg := "Error loading .env file" + err.Error()
+		log.Fatal(msg)
+		panic(msg)
 	}
 	connStr = os.Getenv("CONNSTR")
 
-	//var choice uint8
+	// write log msgs into file
 	f, err := os.OpenFile("log.txt", os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
 	if err != nil {
 		log.Fatalf("error opening file: %v", err)
@@ -38,6 +39,7 @@ func main() {
 	defer f.Close()
 	log.SetOutput(f)
 
+	// select function to run
 	for {
 		screen.Clear()
 		screen.MoveTopLeft()
@@ -67,9 +69,9 @@ func main() {
 		default:
 			fmt.Println("Bye")
 			os.Exit(0)
-		}
-	}
-}
+		} // switch
+	} // for
+} // main
 
 func menu() uint8 {
 	var choice uint8
